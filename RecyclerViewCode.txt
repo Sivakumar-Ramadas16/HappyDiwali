@@ -1,0 +1,101 @@
+package com.example.codeswag.Controller
+
+import android.content.res.Configuration
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.util.Log
+import android.widget.Adapter
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.codeswag.Adapters.ProductAdapter
+import com.example.codeswag.R
+import com.example.codeswag.Services.DataService
+import com.example.codeswag.Utilities.EXTRA_CATEGORY
+import kotlinx.android.synthetic.main.activity_products.*
+
+Below code for Recycler view
+class ProductsActivity : AppCompatActivity() {
+
+    lateinit var adapter: ProductAdapter
+    var prefixProduct:String = "product"
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_products)
+        Log.e("Checking","${javaClass.simpleName}  OnCreate")
+      prefixProduct=  intent.getStringExtra(EXTRA_CATEGORY)
+        Log.e("Checking", prefixProduct )
+
+        // No item Click
+        adapter = ProductAdapter(this,  DataService.getProducts(prefixProduct))
+        RecyclerProducts.adapter = adapter
+
+        val orientation = resources.configuration.orientation
+        var spancount = 2
+        if (orientation ==Configuration.ORIENTATION_PORTRAIT)
+        {
+            spancount = 2
+        }
+
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE)
+        {
+            spancount= 4
+        }
+
+        val screensize = resources.configuration.screenWidthDp
+        if (screensize > 750) {spancount = 3}
+        val layoutMgr = GridLayoutManager(this,spancount)
+        RecyclerProducts.layoutManager = layoutMgr
+
+    }
+}
+
+Below one for Adapter Class
+package com.example.codeswag.Adapters
+
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.RecyclerView
+import com.example.codeswag.Controller.Product
+import com.example.codeswag.R
+import kotlinx.android.synthetic.main.products_list_item.view.*
+
+class ProductAdapter(val context : Context, val products : List<Product>) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(context).
+            inflate(R.layout.products_list_item,parent,false)
+        return ViewHolder(view)
+    }
+
+    override fun getItemCount(): Int {
+        return products.size
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        if (position%2 == 1)  holder.cv.setCardBackgroundColor(8)
+        holder?.bindData(context,products[position])
+    }
+
+
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val cv = itemView.findViewById<CardView>(R.id.cvProductrow)
+        val productTitle = itemView?.findViewById<TextView>(R.id.tvTitle)
+        val productPrice = itemView?.findViewById<TextView>(R.id.tvPrice)
+        val productImage = itemView?.findViewById<ImageView>(R.id.ivProdcut)
+
+        fun bindData (context:Context, product :Product){
+           productTitle.text = product.Title
+           productPrice.text = product.Price
+           val resId = context.resources.getIdentifier(product.PName,"drawable",context.packageName)
+           productImage.setImageResource( resId)
+
+        }
+
+
+    }
+}

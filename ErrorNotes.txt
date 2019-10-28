@@ -1,0 +1,426 @@
+id com.example.firebasejul30   
+
+     Build Gradle(Project: FirebaseJul30)
+     classpath 'com.android.tools.build:gradle:3.4.2'
+     classpath 'com.google.gms:google-services:4.2.0'
+
+    Build.gradle(Module:app)
+     implementation 'com.android.support:appcompat-v7:28.0.0'  // Error shows here after adding the below line
+  // implementation 'com.google.firebase:firebase-core:17.0.0'  // This is not working
+     implementation 'com.google.firebase:firebase-core:16.0.1' is working
+
+
+'com.google.gms.google-services'
+
+Future Skills
+http://gbslearn-stg.atlanta.ibm.com/futureskills/index.html
+
+
+SivaSiva
+com.example.sivasiva
+
+ //Firebase Library July 30th Siva Siva
+    implementation 'com.google.firebase:firebase-core:16.0.1'
+    implementation 'com.google.firebase:firebase-auth:15.1.0'
+    implementation 'com.google.firebase:firebase-database:16.0.1'
+
+Very Bottom Line after the closed Curly }
+    apply plugin: 'com.google.gms.google-services'   
+    //Firebase Library July 30th
+=====================================================
+Share preference tutorial Excellent Tutorial Part 1 & 2
+part 1
+https://www.youtube.com/watch?v=riyMQiHY3V4
+Part 2
+https://www.youtube.com/watch?v=1xQSK772rPs
+
+=============================================
+Aug 1st Syntax for Shared preferences
+         Here myData1 has all variable with keys userName, passWord
+
+
+   public void Save(View view) {
+        SharedPreferences sharedPreferences = getSharedPreferences("myData1", getApplicationContext().MODE_PRIVATE);
+       SharedPreferences.Editor editor =  sharedPreferences.edit();
+       editor.putString("userName",etName.getText().toString());
+       editor.putString("passWord",etPass.getText().toString());
+
+       editor.commit();
+
+        Toast.makeText(this,"Succesfully Saved",Toast.LENGTH_LONG).show();
+    }
+
+
+    public void Retrieve(View view) {  //myData1 should match with what we mentioned in Save
+
+        SharedPreferences sharedPreferences = getSharedPreferences("myData1",getApplicationContext().MODE_PRIVATE);
+        String uName = sharedPreferences.getString("userName","NA");
+        String pWord = sharedPreferences.getString("passWord","NA");
+
+        if(uName.equals("NA") || pWord.equals("NA"))
+        {
+            Toast.makeText(this, "No Data Avl",Toast.LENGTH_LONG).show();
+        }
+        else {            Toast.makeText(this, "Data availble",Toast.LENGTH_LONG).show();
+                    etDisplay.setText( uName + " " + pWord );
+
+        }
+
+
+    }
+
+How to find the data if it is saved or not in Android studio
+Simulator will be on to check 
+View - > Tools Window -> Device File Explorer - Data - Data - package name - Shared pref 
+
+------------------------------------------------------ Saved there
+
+Constrain Layout Youtube Link it is good one
+https://www.youtube.com/watch?v=rzmB3UxxhaA
+https://www.youtube.com/watch?v=P2XHNDHI4PQ
+
+User Display Name Code
+   mAuth.createUserWithEmailAndPassword(Email, Password).addOnCompleteListener(sucess).addOnFailureListener(failure);
+        UserProfileChangeRequest changeRequest = new UserProfileChangeRequest.Builder().setDisplayName(mDisplayName).build();
+        mUser.updateProfile(changeRequest);
+
+How to create Menu
+ @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.option_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.menuLogOut) {
+            mAuth.signOut();
+            Toast.makeText(getApplicationContext(), "Logging out", Toast.LENGTH_LONG).show();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+============================= Ends Menu Creation ======================
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.sivachat">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".SignIn"></activity>
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
+==============================================
+Aug 09  If we need to install any S/W Use the below link
+https://w3-01.ibm.com/download/standardsoftware/PC/lang_en/issiCatalogPC.html?srchdata=Adobe
+
+To change the icon to new one   android:roundIcon="@mipmap/ic_launcher_round"
+
+
+
+Dataformatiing Code
+ val dateFormatter = SimpleDateFormat("MMM d, h:mm a", Locale.getDefault())
+            val dateString = dateFormatter.format(thought.timeStamp)
+            timeStamp?.text = dateString
+
+// firebase query
+
+  val query = ThoughtsCollectionRef.whereEqualTo(CATEGORY, selectedCategory)
+            .orderBy(TIMESTAMP, Query.Direction.DESCENDING)
+        val queryPopular: Query = ThoughtsCollectionRef.orderBy(NUMLIKES, Query.Direction.DESCENDING)
+
+
+ERROR Message - Aug 17 2019 E/zygote64: The String#value field is not present on Android versions >= 6.0 Not working in Physical device
+com.firebase:geofire-android:2.1.1 Added in the Gradle file
+
+
+============================================================= Aug 18 2019 ================
+
+fun hidekeyboard() {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        if (imm.isAcceptingText) {imm.hideSoftInputFromWindow(currentFocus.windowToken,0)}
+
+
+How to write Queries This is very good idea firt define a query then call by .run comemnts
+   val query = ThoughtsCollectionRef.whereEqualTo(CATEGORY, selectedCategory)
+            .orderBy(TIMESTAMP, Query.Direction.DESCENDING)
+        val queryPopular: Query = ThoughtsCollectionRef.orderBy(NUMLIKES, Query.Direction.DESCENDING)
+
+
+==========================================================Aug 20 Create User Code========================
+    fun createCreateUser(view: View) {
+        val Email =createEmail.text.toString()
+        val Password = createPassword.text.toString()
+        val username = createUserName.text.toString()
+        auth.createUserWithEmailAndPassword(Email,Password)
+            .addOnSuccessListener { result ->
+                val data = HashMap<String,Any>()
+                data.put(USERNAME, username)
+                data.put(EMAIL, Email)
+                data.put(PHONE,"8197876677")
+                data.put(DATE_CREATED, FieldValue.serverTimestamp())
+                FirebaseFirestore.getInstance().collection(USER_REF)
+                    .document(result.user.uid).set(data)
+                
+                val changeRequest = UserProfileChangeRequest.Builder()
+                    .setDisplayName(username)
+                    .build()
+                    result.user.updateProfile(changeRequest)
+                        .addOnFailureListener {  Exception ->
+                            Log.e("SivaEx", "Profile Not Updated :  ${Exception.localizedMessage}")
+                        }
+                        .addOnSuccessListener { finish() }
+                        .addOnFailureListener {  Log.e("SivaEx", "Profile Not Updated ")
+                        }
+            }
+            .addOnFailureListener { Exception ->
+                Log.e("SivaEx", "Invalid Credentials ${Exception.localizedMessage}")
+            }
+    }
+============================================================Aug 20 Create user code Ends
+
+===================== Aug 20 return is working if we put if statemtnt last it does not give the expected result. ===========
+
+fun MainPopularClicked(view: View) {
+        if (selectedCategory == POPULAR) {
+            MainPopular.isChecked = true
+            return
+        }
+        selectedCategory = POPULAR
+        MainSerious.isChecked = false
+        MainCrazy.isChecked = false
+        MainFunny.isChecked = false
+
+        thoughtListener.remove()
+        setListener()
+    }
+===================== Aug 20 return is working if we put if statemtnt last it does not give the expected result. Ends=======
+
+
+android:focusableInTouchMode="true" // To keep the keyboard away 
+
+
+
+//// This is rules already in the FB Anybody can deleted read or write 
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write;
+    }
+  }
+}
+
+Alertdialog Syntax
+val builder = AlertDialog.Builder(this)
+        val dialogView = layoutInflater.inflate(R.layout.options_menu,null)
+        val delBtn = dialogView.findViewById<Button>(R.id.dialogDelete)
+        val editBtn = dialogView.findViewById<Button>(R.id.dialogEdit)
+        builder.setView(dialogView)
+            .setNegativeButton("cancel"){_,_ -> }
+        val ad = builder.show()
+
+SHA1 Code : 
+   c:\Program Files\Java\jdk-11.0.1\bin>
+   keytool -list -v -alias androiddebugkey -keystore  %USERPROFILE%\.android\debug.keystore
+ 
+
+Hide Keyboard
+fun hidekeyboard() {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        if (imm.isAcceptingText) {
+            imm.hideSoftInputFromWindow(currentFocus.windowToken, 0)
+        }
+    }
+
+Aug 25 This is for how to read the Excel file in Android
+Download path of Files
+/storage/emulated/0/Download/ContactDetails.xlsx
+
+================
+
+ val bitmap = BitmapFactory.decodeResource(resources,R.drawable.india)
+        val rounded = RoundedBitmapDrawableFactory.create(resources,bitmap)
+        rounded.cornerRadius = 20f
+        rounded.isCircular = true
+        logo.setImageDrawable(rounded) // logo = id of image file
+
+Git Password SivakumarRamadas16!
+
+https://github.com/Sivakumar-Ramadas16/AndroidSample.git
+C:\Udemy\
+
+After modifications
+
+1 git add .
+2 git commit -m "AnyMsgforRefer"
+3 git push origin master
+
+To create Branch
+git branch "Branchname"    // Create Branch
+
+git checkout branchname    // To go into the particulare Branch 
+
+git pull origin branchname  // To check server and local copies are same
+
+
+Sep 20 2019
+git checkout -b lesson-03  // Switched to a new branch
+git add .
+git commit -m "lesson 3"
+
+===
+git add .
+git commit -m "lesson 4"
+git push origin lesson-4
+git checkout -b lesson-05 
+===
+
+git checkout -b lesson-01
+git add .
+git commit -m "WelcomeScreen"
+git push origin lesson-01
+git checkout -b lesson-02
+=====
+
+git add .
+git commit -m lesson-03
+git push origin lissson-03
+git checkout -b lesson 04
+
+======
+git add .
+git commit -m lesson-06
+git push origin lesson-06
+git checkout -b lesson-07
+
+====
+git add .
+git commit -m lesson-07
+git push origin lession-07
+git checkout -b lession 08
+
+===
+git add .
+git commit -m lessson-08
+git put origing lesson-08
+git checkout -b lession-09
+
+
+
+SharedPreference Kotlin Tutorial
+https://www.youtube.com/watch?v=z2PDwa7l_ww
+
+
+
+
+
+val bitmap = Bitmapfactory.decoderesource(resources, R.drawable.imagename)
+val rounded = Roundedbitmapdrawablefactory(resources, bitmap)
+rounded.iscircular = true // It will be rounded shape
+rounded.cornerRadius = 15f // Corner rounded
+logo.setImageDrawable(rounded)
+
+
+Facility IBM ISSAC Mail id Isaiah Isaac07/India/Contr/IBM
+
+somachan@in.ibm.com He called me on Sep 30 After Kannan fwded my resume it is for JLL Project
+9008490012 Somasekhar's Contact Number
+sriramajayamsriramajayam16
+
+kanakaraj ramakrishnan Phone number :9900161650
+https://yourlearning.ibm.com/#home/queue   [ IBM LINK FOR KOTLIN ]
+
+15 Strings with Kotlin for rawCrawl | is important to align the line it is default 
+Syntax is below
+   var rawcrawl = """ |Once opon a time
+        |there was a king
+        |he is have 3 sons and 
+        |two daughters
+    """ .trimMargin()
+
+             [or or or or or or ]
+
+  var rawcrawl = """ >Once opon a time
+        >there was a king
+        >he is have 3 sons and 
+        >two daughters
+    """ .trimMargin(">")
+
+22 Nullability with Kotlin Chapter.. Good one
+23 Classes and inheritance Good one
+25 lamda with Kotlin
+26 Git and terminal
+32 GitHub Good one
+33 Setting up Github
+
+Below code model will be used to have the ActivityLifeCycle
+    override fun onPause() {
+        Log.e(TAG,"${javaClass.simpleName} OnPause")
+        super.onPause()
+
+
+OCT-17 2019  Adapter class getView Samplee
+ override fun getView(position: Int, convertView:View?, parent: ViewGroup?): View {
+
+    val catView:View
+
+        Log.e(TAG, "${javaClass.simpleName} getView" )
+        println(categories)
+
+           catView = LayoutInflater.from(context).inflate(R.layout.category_list_item,null)
+           val catImage:ImageView = catView.findViewById(R.id.ivCategory)
+           val catTitle : TextView = catView.findViewById(R.id.tvCategoriesText)
+           val category = categories[position]
+           catTitle.text = category.CTitle.toString()
+           // Below lines are used to have picture using the name of the image ********* Very important
+           val resid = context.resources.getIdentifier(category.CName,"drawable",context.packageName)
+
+           catImage.setImageResource(resid)
+
+           return catView
+
+    }
+
+// orientation Finding
+
+   val orientation = resources.configuration.orientation
+        var spancount = 2
+        if (orientation ==Configuration.ORIENTATION_PORTRAIT)
+        {
+            spancount = 2
+        }
+
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE)
+        {
+            spancount= 4
+        }
+
+
+When we try to use the Navigation Activity instead of regular empty activity i got the error msg for JVM 1.8 JVM 1.6 to fix this problem 
+
+Google source https://stackoverflow.com/questions/48988778/cannot-inline-bytecode-built-with-jvm-target-1-8-into-bytecode-that-is-being-bui
+Copy the below lines in build gradle Module App
+
+compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
+    }
